@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>TikTok账号购买 | TKMai.TOP - TK千粉号/直播号/老号自动发货平台</title>
+    <meta name="description" content="专业提供 TikTok 账号购买服务 (TKMai.TOP)。精选 TK 千粉号(已开通直播权限)、TikTok 满月老号、美国/英国/东南亚本土号及广告号。支持 2FA 双重验证，自动发货，安全稳定。">
+    <meta name="keywords" content="TikTok账号购买, TK账号批发, TikTok千粉号, TK直播号, 购买TikTok老号, TikTok Ads账号, TK小白号, 跨境电商账号">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        dark: '#000000',      // 纯黑背景
+                        card: '#121212',      // 卡片背景
+                        tikcyan: '#00F2EA',   // TikTok 青
+                        tikpink: '#FF0050',   // TikTok 粉
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-neon': 'pulseNeon 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        pulseNeon: {
+                            '0%, 100%': { boxShadow: '0 0 5px #00F2EA, 0 0 10px #00F2EA' },
+                            '50%': { boxShadow: '0 0 20px #FF0050, 0 0 30px #FF0050' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* 故障风网格背景 */
+        .bg-grid {
+            background-color: #000000;
+            background-image: 
+                linear-gradient(rgba(0, 242, 234, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 80, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        .glass-card {
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 抖音风文字渐变 */
+        .text-gradient {
+            background: linear-gradient(to right, #00F2EA, #ffffff, #FF0050);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-dark text-white font-sans antialiased selection:bg-tikcyan selection:text-black bg-grid">
+
+    <nav class="sticky top-0 w-full z-50 glass-card border-x-0 border-t-0 bg-black/90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-1 group cursor-pointer">
+                    <div class="relative w-8 h-8 flex items-center justify-center">
+                        <i data-lucide="music-2" class="w-6 h-6 text-white absolute z-10"></i>
+                        <i data-lucide="music-2" class="w-6 h-6 text-tikcyan absolute -left-0.5 -top-0.5 opacity-70"></i>
+                        <i data-lucide="music-2" class="w-6 h-6 text-tikpink absolute -right-0.5 -bottom-0.5 opacity-70"></i>
+                    </div>
+                    <span class="text-xl font-black tracking-tighter italic">TK<span class="text-white">Mai</span><span class="text-tikcyan">.TOP</span></span>
+                </div>
+
+                <div class="hidden md:flex gap-8 text-sm font-bold tracking-wide text-gray-400">
+                    <a href="#products" class="hover:text-white transition-colors">TikTok账号</a>
+                    <a href="#live" class="text-tikpink hover:text-white transition-colors">千粉/直播号</a>
+                    <a href="#ads" class="hover:text-white transition-colors">广告/跨境</a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <a href="/go/buy-tk" rel="nofollow sponsored noopener noreferrer" class="hidden md:flex items-center gap-2 bg-white text-black px-6 py-2 rounded-full text-sm font-black hover:bg-gray-200 transition-all shadow-[2px_2px_0px_#00F2EA,-2px_-2px_0px_#FF0050]">
+                        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                        立即抢购
+                    </a>
+                    <button id="mobile-menu-btn" class="md:hidden text-white">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-card border-b border-white/10 absolute w-full">
+            <div class="grid grid-cols-1 p-4 gap-2">
+                <a href="#products" class="block p-3 text-center rounded bg-white/5 text-sm font-bold">TikTok 账号选购</a>
+                <a href="/go/buy-tk" rel="nofollow sponsored noopener noreferrer" class="block p-3 text-center rounded bg-gradient-to-r from-tikcyan to-tikpink text-black text-sm font-black">前往商店</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative pt-20 pb-24 lg:pt-32 lg:pb-32 overflow-hidden">
+        <div class="absolute top-1/4 left-0 w-[500px] h-[500px] bg-tikcyan/10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-tikpink/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-300 text-xs font-bold mb-8 uppercase tracking-widest hover:border-tikcyan/50 transition-all">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tikpink opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-tikpink"></span>
+                </span>
+                2026 TikTok 全球流量红利
+            </div>
+            
+            <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter mb-6 leading-tight">
+                <span class="block text-white">Unlock Global</span>
+                <span class="text-gradient">TikTok Traffic</span>
+            </h1>
+            
+            <p class="max-w-2xl mx-auto text-lg sm:text-xl text-gray-400 mb-10 font-medium">
+                一站式 TikTok 账号服务商。
+                <strong class="text-white">千粉直播号</strong>、<strong class="text-white">美区老号</strong>、<strong class="text-white">Ads广告号</strong>。
+                <br class="hidden sm:block" />
+                自动发货，支持 USDT / 支付宝，助力跨境电商出海。
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#products" class="w-full sm:w-auto px-10 py-4 bg-white text-black font-black text-lg rounded-full hover:scale-105 transition-transform flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,242,234,0.4)]">
+                    选购账号 <i data-lucide="arrow-down" class="w-5 h-5"></i>
+                </a>
+                <div class="flex gap-6 text-sm text-gray-500 font-mono mt-4 sm:mt-0">
+                    <span class="flex items-center gap-1"><i data-lucide="zap" class="w-4 h-4 text-tikcyan"></i> Instant Delivery</span>
+                    <span class="flex items-center gap-1"><i data-lucide="shield-check" class="w-4 h-4 text-tikpink"></i> Safe & Secure</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <span class="text-tikcyan font-bold tracking-widest uppercase text-xs border border-tikcyan/30 px-3 py-1 rounded-full bg-tikcyan/5">Official Price List</span>
+                <h2 class="text-4xl md:text-5xl font-black text-white mt-4 italic tracking-tighter">
+                    Choose Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-tikcyan to-tikpink">TikTok Account</span>
+                </h2>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
+                    官方一手号源，价格透明。从小白入门到专业运营，满足您不同阶段的需求。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                
+                <div class="group relative flex flex-col glass-card rounded-3xl p-8 hover:bg-white/5 transition-all duration-300 border-t border-white/10">
+                    <div class="mb-4 flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-md bg-gray-800 text-gray-300 text-xs font-bold">Beginner / 新手</span>
+                        <span class="text-xs text-gray-500 font-mono">Stock: 99+</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">TK 全新/满月号</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow">
+                        适合新手低成本试错。满月白号权重更稳，支持美/台/印/泰等热门地区。
+                    </p>
+                    
+                    <div class="flex items-end gap-1 mb-6">
+                        <span class="text-sm font-bold text-gray-500 mb-1">¥</span>
+                        <span class="text-4xl font-black text-white">24.00</span>
+                        <span class="text-xs text-gray-600 ml-1">起</span>
+                    </div>
+
+                    <ul class="space-y-3 mb-8 text-sm text-gray-400">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-gray-500"></i> 全新账号 / 满月白号可选</li>
+                        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-gray-500"></i> 美/台/印/巴/越 多区可选</li>
+                        <li class="flex items-center gap-2"><i data-lucide="thumbs-up" class="w-4 h-4 text-gray-500"></i> 适合刷视频/点赞/练手</li>
+                    </ul>
+
+                    <a href="/go/buy-tk" rel="nofollow sponsored noopener noreferrer" class="w-full py-4 rounded-xl bg-white/10 hover:bg-white hover:text-black text-center font-bold text-sm transition-all border border-white/10">
+                        立即购买
+                    </a>
+                </div>
+
+                <div id="live" class="group relative flex flex-col glass-card rounded-3xl p-8 transform md:-translate-y-6 z-10 border border-tikpink shadow-[0_0_50px_rgba(255,0,80,0.15)] bg-[#1a050d]/80">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-tikpink to-red-600 text-white px-6 py-1.5 rounded-full text-xs font-black uppercase tracking-widest shadow-lg flex items-center gap-2">
+                        <i data-lucide="flame" class="w-3 h-3 fill-white"></i> Hot Sale
+                    </div>
+
+                    <div class="mb-4 mt-2 flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-md bg-tikpink/20 text-tikpink text-xs font-bold">1000+ Fans</span>
+                        <span class="text-xs text-tikpink font-bold animate-pulse">送安装包</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">TK 千粉直播号</h3>
+                    <p class="text-sm text-gray-300 mb-6 flex-grow">
+                        <strong class="text-white">开局即变现！</strong>自带1000+真实粉丝，已开通直播权限(Live)和橱窗带货。
+                    </p>
+                    
+                    <div class="flex items-end gap-1 mb-6">
+                        <span class="text-sm font-bold text-tikpink mb-1">¥</span>
+                        <span class="text-5xl font-black text-white">118</span>
+                        <span class="text-sm text-gray-500 line-through mb-1 ml-2">¥168</span>
+                    </div>
+
+                    <ul class="space-y-3 mb-8 text-sm text-gray-300">
+                        <li class="flex items-center gap-2"><i data-lucide="video" class="w-4 h-4 text-tikpink"></i> <strong>直播/橱窗权限已开通</strong></li>
+                        <li class="flex items-center gap-2"><i data-lucide="globe" class="w-4 h-4 text-tikpink"></i> 美/英/日/台/东南亚 IP可选</li>
+                        <li class="flex items-center gap-2"><i data-lucide="gift" class="w-4 h-4 text-tikpink"></i> <strong>赠送 TK 免拔卡安装包</strong></li>
+                        <li class="flex items-center gap-2"><i data-lucide="trending-up" class="w-4 h-4 text-tikpink"></i> 另有自然流高权号 (¥298起)</li>
+                    </ul>
+
+                    <a href="/go/buy-tk" rel="nofollow sponsored noopener noreferrer" class="w-full py-4 rounded-xl bg-tikpink hover:bg-red-600 text-white text-center font-bold text-sm transition-all shadow-lg shadow-tikpink/20 animate-pulse-neon">
+                        立即抢购
+                    </a>
+                </div>
+
+                <div class="group relative flex flex-col glass-card rounded-3xl p-8 hover:bg-white/5 transition-all duration-300 border-t border-tikcyan/50">
+                    <div class="mb-4 flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-md bg-tikcyan/10 text-tikcyan text-xs font-bold">1 Year+ Old</span>
+                        <span class="text-xs text-gray-500">High Weight</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">TK 满一年/年份老号</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow">
+                        注册满1年以上的高权重老号。抗封耐用，相比新号更容易跑出流量。
+                    </p>
+                    
+                    <div class="flex items-end gap-1 mb-6">
+                        <span class="text-sm font-bold text-gray-500 mb-1">¥</span>
+                        <span class="text-4xl font-black text-white">42.00</span>
+                        <span class="text-xs text-gray-600 ml-1">起</span>
+                    </div>
+
+                    <ul class="space-y-3 mb-8 text-sm text-gray-400">
+                        <li class="flex items-center gap-2"><i data-lucide="calendar-clock" class="w-4 h-4 text-tikcyan"></i> <strong>注册满一年 / 2020-2022年</strong></li>
+                        <li class="flex items-center gap-2"><i data-lucide="map" class="w-4 h-4 text-tikcyan"></i> 全球20+国家/地区可选</li>
+                        <li class="flex items-center gap-2"><i data-lucide="shield" class="w-4 h-4 text-tikcyan"></i> 高权重，适合主账号运营</li>
+                    </ul>
+
+                    <a href="/go/buy-tk" rel="nofollow sponsored noopener noreferrer" class="w-full py-4 rounded-xl bg-tikcyan hover:bg-cyan-400 text-black text-center font-bold text-sm transition-all">
+                        立即购买
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <div id="ads" class="glass-card rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8 border border-purple-500/20 hover:border-purple-500/50 transition-all bg-purple-900/10">
+                    <div class="flex-1 text-center md:text-left">
+                        <h3 class="text-xl font-bold text-white mb-2 flex items-center justify-center md:justify-start gap-2">
+                            <i data-lucide="briefcase" class="w-5 h-5 text-purple-400"></i> TikTok Ads 广告账户
+                        </h3>
+                        <p class="text-sm text-gray-400 mb-4">
+                            美区预付/后付，以及全球多国后付账户。BC户/个人户齐全，已过审可直接投流。
+                        </p>
+                        <div class="flex items-baseline gap-1 justify-center md:justify-start">
+                            <span class="text-xs text-purple-400 font-bold">Price</span>
+                            <span class="text-3xl font-black text-white">¥150.00</span>
+                        </div>
+                    </div>
+                    <div class="shrink-0">
+                         <a href="/go/buy-tk" rel="nofollow sponsored noopener noreferrer" class="px-8 py-3 rounded-xl bg-purple-600 text-white font-bold text-sm hover:bg-purple-500 transition-all shadow-lg shadow-purple-600/20">
+                            购买广告号
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8 border border-green-500/20 hover:border-green-500/50 transition-all bg-green-900/10">
+                    <div class="flex-1 text-center md:text-left">
+                        <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
+                            <h3 class="text-xl font-bold text-white">免拔卡安装包 + 账号</h3>
+                            <span class="bg-green-500 text-black text-[10px] font-bold px-2 py-0.5 rounded">Combo</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-4">
+                            解决安卓手机下载难题，免拔卡直接使用。套餐包含：TK安装包 + 普通白号。
+                        </p>
+                        <div class="flex items-baseline gap-1 justify-center md:justify-start">
+                            <span class="text-xs text-green-400 font-bold">Bundle</span>
+                            <span class="text-3xl font-black text-white">¥30.80</span>
+                        </div>
+                    </div>
+                    <div class="shrink-0">
+                         <a href="/go/buy-tk" rel="nofollow sponsored noopener noreferrer" class="px-8 py-3 rounded-xl bg-green-600 text-white font-bold text-sm hover:bg-green-500 transition-all shadow-lg shadow-green-600/20">
+                            购买套餐
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-black border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-black text-white">Why TKMai?</h2>
+                <p class="text-gray-500 mt-2">专为跨境电商与流量玩家打造</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card p-8 rounded-3xl flex flex-col items-center text-center hover:border-tikcyan/50 transition-all">
+                    <div class="w-16 h-16 rounded-full bg-tikcyan/10 flex items-center justify-center mb-6">
+                        <i data-lucide="globe-2" class="w-8 h-8 text-tikcyan"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">全球本土号</h3>
+                    <p class="text-sm text-gray-400">覆盖美国、英国、东南亚等热门地区。原生IP注册，更精准的流量推送。</p>
+                </div>
+                <div class="glass-card p-8 rounded-3xl flex flex-col items-center text-center hover:border-tikpink/50 transition-all">
+                    <div class="w-16 h-16 rounded-full bg-tikpink/10 flex items-center justify-center mb-6">
+                        <i data-lucide="zap" class="w-8 h-8 text-tikpink"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">秒速自动发货</h3>
+                    <p class="text-sm text-gray-400">付款后系统自动发送卡密（账号-密码-邮箱-2FA）。7x24小时无人值守发货。</p>
+                </div>
+                <div class="glass-card p-8 rounded-3xl flex flex-col items-center text-center hover:border-purple-500/50 transition-all">
+                    <div class="w-16 h-16 rounded-full bg-purple-500/10 flex items-center justify-center mb-6">
+                        <i data-lucide="lock" class="w-8 h-8 text-purple-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">安全防盗号</h3>
+                    <p class="text-sm text-gray-400">所有账号均包含原始注册邮箱 (Email Access)，并已开启 2FA，100% 归属权。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-card border-t border-white/5">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <i data-lucide="file-code" class="w-6 h-6 text-tikcyan"></i> 账号交付格式
+                    </h3>
+                    <p class="text-gray-400 text-sm mb-6">
+                        我们将以标准格式交付账号，确保您可以轻松导入到指纹浏览器或手机。
+                    </p>
+                    <div class="bg-black p-4 rounded-xl border border-white/10 font-mono text-xs text-tikcyan break-all">
+                        username---password---email---email_password---2fa_secret
+                    </div>
+                </div>
+                <div class="w-full md:w-px h-px md:h-32 bg-white/10"></div>
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <i data-lucide="help-circle" class="w-6 h-6 text-tikpink"></i> 新手提示
+                    </h3>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-tikpink shrink-0 mt-0.5"></i>
+                            <span>登录新设备建议先养号 24 小时再发布视频。</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-tikpink shrink-0 mt-0.5"></i>
+                            <span>如果遇到验证码，请使用卡密中的 2FA 密钥获取。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 bg-black text-center border-t border-white/10">
+        <div class="flex items-center justify-center gap-2 mb-4 opacity-50">
+            <i data-lucide="music-2" class="w-5 h-5 text-white"></i>
+            <span class="font-black text-lg text-white">TK<span class="text-tikcyan">Mai</span></span>
+        </div>
+        <p class="text-xs text-gray-600">© 2026 TKMai.TOP Services. All rights reserved.</p>
+        <div class="flex justify-center gap-4 mt-4 text-xs text-gray-600">
+            <a href="#" class="hover:text-white">Privacy Policy</a>
+            <a href="#" class="hover:text-white">Terms of Service</a>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        
+        // Mobile Menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
