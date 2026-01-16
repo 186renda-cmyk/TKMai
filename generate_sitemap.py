@@ -31,13 +31,17 @@ if os.path.exists("blog"):
     # Blog Posts
     for filename in os.listdir("blog"):
         if filename.endswith(".html") and filename != "index.html":
-            urls.append(generate_url_entry(f"{BASE_URL}/blog/{filename}", priority="0.8"))
+            # Remove .html extension
+            url_path = filename[:-5]
+            urls.append(generate_url_entry(f"{BASE_URL}/blog/{url_path}", priority="0.8"))
 
 # 3. Legal
 if os.path.exists("legal"):
     for filename in os.listdir("legal"):
         if filename.endswith(".html"):
-            urls.append(generate_url_entry(f"{BASE_URL}/legal/{filename}", priority="0.5", changefreq="monthly"))
+            # Remove .html extension
+            url_path = filename[:-5]
+            urls.append(generate_url_entry(f"{BASE_URL}/legal/{url_path}", priority="0.5", changefreq="monthly"))
 
 # Generate Content
 sitemap_content = f"""<?xml version="1.0" encoding="UTF-8"?>
