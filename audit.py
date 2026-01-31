@@ -24,7 +24,7 @@ class Config:
         self.root_dir = Path.cwd()
         self.base_url = None
         self.keywords = []
-        self.ignore_paths = {'.git', 'node_modules', '__pycache__', '.idea', '.vscode', 'venv', 'env'}
+        self.ignore_paths = {'.git', 'node_modules', '__pycache__', '.idea', '.vscode', 'venv', 'env', 'MasterTool'}
         self.ignore_url_prefixes = ('/go/', '/cdn-cgi/', 'javascript:', 'mailto:', 'tel:', '#')
         self.ignore_files_contain = ['google', '404.html']
         self.external_links = set()
@@ -108,7 +108,7 @@ class Auditor:
                     'inbound_count': 0
                 }
 
-    def check_link_resolution(self, source_file, href):
+    def check_link_resolution(self, source_file, href, link_element=None):
         # 1. Check ignore list
         if href.startswith(self.config.ignore_url_prefixes):
             return
@@ -124,6 +124,17 @@ class Auditor:
                 self.check_internal_link(source_file, path, is_absolute_url=True)
             else:
                 self.config.external_links.add(href)
+                # Check for nofollow on external links to prevent link juice leakage
+                if link_element:
+                    rel = link_element.get('rel', [])
+                    # Ensure rel is a list (BeautifulSoup usually returns list for rel, but safety first)
+                    if isinstance(rel, str):
+                        rel = rel.split()
+                    
+                    if 'nofollow' not in rel:
+                        self.config.warnings.append((str(source_file.relative_to(self.config.root_dir)), 
+                                                   f"External link missing 'nofollow': {href} (risk of link juice leakage)"))
+                        self.config.score -= 2
             return
 
         # 3. Internal Links
@@ -231,7 +242,7 @@ class Auditor:
                     # Extract Links
                     for a in soup.find_all('a', href=True):
                         href = a['href'].strip()
-                        self.check_link_resolution(file_path, href)
+                        self.check_link_resolution(file_path, href, link_element=a)
                         
             except Exception as e:
                 print(f"{Fore.RED}[ERROR] Processing file {file_path}: {e}")

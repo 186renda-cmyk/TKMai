@@ -87,11 +87,27 @@ class SiteBuilder:
                 a['href'] = '/' + href
 
     def _clean_links(self, element):
-        """Remove .html suffix from internal links"""
+        """Remove .html suffix from internal links and add security attributes to external links"""
         for a in element.find_all('a', href=True):
             href = a['href']
-            # Skip external links, anchors, and non-html files
-            if href.startswith('http') or href.startswith('#') or href.startswith('mailto:'):
+            
+            # Handle External Links
+            if href.startswith('http'):
+                # Exclude internal absolute links (assuming tkmai.top is the domain)
+                if 'tkmai.top' not in href:
+                    rel = a.get('rel', [])
+                    if isinstance(rel, str):
+                        rel = rel.split()
+                    
+                    # Add nofollow noopener noreferrer
+                    for attr in ['nofollow', 'noopener', 'noreferrer']:
+                        if attr not in rel:
+                            rel.append(attr)
+                    a['rel'] = rel
+                continue
+
+            # Skip anchors and mailto
+            if href.startswith('#') or href.startswith('mailto:'):
                 continue
             
             # Remove .html extension
@@ -268,7 +284,7 @@ class SiteBuilder:
         else:
             soup.body.append(new_footer)
 
-    def _inject_recommendations(self, soup):
+    def _inject_recommendations(self, soup, current_filename=None):
         # Find article
         article = soup.find('article')
         if article:
@@ -288,17 +304,16 @@ class SiteBuilder:
             # Grid
             grid = soup.new_tag('div', attrs={'class': 'grid grid-cols-1 md:grid-cols-2 gap-6'})
             
-            # TODO: Logic to get actual other posts. For now, static or random placeholder?
-            # Instructions say "Smart Recommendation". 
-            # Let's add a placeholder structure that links to blog index or similar, 
-            # or ideally we should scan other files.
-            # For simplicity and robustness in this first pass, I'll add a link to the blog index and maybe one static valid link if I know it.
-            # Actually, the user asked for "Injection", implying we should put something there.
-            
-            # Let's simple scan the blog dir for other files to link to
+            # Scan blog dir for other files
             other_files = [f for f in os.listdir(self.blog_dir) if f.endswith('.html') and f != 'index.html']
+            
+            # Filter out current file
+            if current_filename:
+                other_files = [f for f in other_files if f != current_filename]
+            
             import random
-            selected = other_files[:2] # Just take first 2 for now
+            random.shuffle(other_files)
+            selected = other_files[:4] # Take up to 4
             
             for f_name in selected:
                 # We need to open them to get title? Or just use filename?
@@ -326,10 +341,71 @@ class SiteBuilder:
             rec_div.append(grid)
             article.append(rec_div)
 
+    def generate_sitemap(self):
+        print("Generating sitemap.xml...")
+        import datetime
+        
+        base_url = "https://tkmai.top"
+        today = datetime.date.today().isoformat()
+        
+        urls = []
+        
+        # 1. Home
+        urls.append({
+            "loc": f"{base_url}/",
+            "lastmod": today,
+            "changefreq": "daily",
+            "priority": "1.0"
+        })
+        
+        # 2. Blog Posts
+        if os.path.exists(self.blog_dir):
+            for filename in os.listdir(self.blog_dir):
+                if filename.endswith('.html') and filename != 'index.html' and filename != '404.html':
+                    slug = filename.replace('.html', '')
+                    urls.append({
+                        "loc": f"{base_url}/blog/{slug}",
+                        "lastmod": today,
+                        "changefreq": "weekly",
+                        "priority": "0.8"
+                    })
+
+        # 3. Legal Pages
+        if os.path.exists(self.legal_dir):
+            for filename in os.listdir(self.legal_dir):
+                if filename.endswith('.html') and filename != '404.html':
+                    slug = filename.replace('.html', '')
+                    urls.append({
+                        "loc": f"{base_url}/legal/{slug}",
+                        "lastmod": today,
+                        "changefreq": "monthly",
+                        "priority": "0.5"
+                    })
+                    
+        # Generate XML
+        sitemap_content = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+        
+        for url in urls:
+            sitemap_content.append('    <url>')
+            sitemap_content.append(f'        <loc>{url["loc"]}</loc>')
+            sitemap_content.append(f'        <lastmod>{url["lastmod"]}</lastmod>')
+            sitemap_content.append(f'        <changefreq>{url["changefreq"]}</changefreq>')
+            sitemap_content.append(f'        <priority>{url["priority"]}</priority>')
+            sitemap_content.append('    </url>')
+            
+        sitemap_content.append('</urlset>')
+        
+        sitemap_path = os.path.join(self.root_dir, 'sitemap.xml')
+        with open(sitemap_path, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(sitemap_content))
+            
+        print(f"Sitemap generated at {sitemap_path} with {len(urls)} URLs")
+
     def run(self):
         print("Starting build process...")
         self.load_source()
         self.process_all_pages()
+        self.generate_sitemap()
         print("Build complete.")
 
 if __name__ == "__main__":
