@@ -14,6 +14,7 @@ class SiteBuilder:
         self.footer_html = None
         self.favicons = []
         self.common_styles_scripts = []
+        self.blog_posts = []
         
     def load_source(self):
         """Phase 1: Load and parse index.html as single source of truth"""
@@ -76,6 +77,10 @@ class SiteBuilder:
                 if tag.name == 'title':
                     continue
                 
+                # Skip JSON-LD structured data (should be handled per page)
+                if tag.name == 'script' and tag.get('type') == 'application/ld+json':
+                    continue
+
                 # Keep external resources and inline configs
                 self.common_styles_scripts.append(tag)
 
@@ -124,10 +129,18 @@ class SiteBuilder:
         """Process blog, legal, and index pages"""
         # 1. Process Blog Directory
         if os.path.exists(self.blog_dir):
-            for filename in os.listdir(self.blog_dir):
-                if filename.endswith('.html'):
-                    file_path = os.path.join(self.blog_dir, filename)
-                    self._process_single_file(file_path, filename, section='blog')
+            all_files = [f for f in os.listdir(self.blog_dir) if f.endswith('.html')]
+            blog_index = 'index.html'
+            posts = [f for f in all_files if f != blog_index]
+            
+            # Process posts first to collect metadata
+            for filename in posts:
+                file_path = os.path.join(self.blog_dir, filename)
+                self._process_single_file(file_path, filename, section='blog')
+            
+            # Process Blog Index (last, so it has all posts data)
+            if blog_index in all_files:
+                self._process_single_file(os.path.join(self.blog_dir, blog_index), blog_index, section='blog')
 
         # 2. Process Legal Directory
         if os.path.exists(self.legal_dir):
@@ -151,6 +164,10 @@ class SiteBuilder:
         # Phase 2: Head Reconstruction
         self._reconstruct_head(soup, filename, section)
 
+        # Collect metadata for blog posts
+        if section == 'blog' and filename != 'index.html':
+            self._extract_blog_metadata(soup, filename)
+
         # Phase 3: Content Injection
         self._inject_layout(soup)
         
@@ -165,6 +182,29 @@ class SiteBuilder:
         # Save file
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(str(soup))
+
+    def _extract_blog_metadata(self, soup, filename):
+        title = soup.title.string.split('|')[0].strip() if soup.title else filename
+        desc = ""
+        meta_desc = soup.find('meta', attrs={'name': 'description'})
+        if meta_desc: desc = meta_desc.get('content', '')
+        
+        date = "2026-01-01" # Default
+        # Try to find date in various formats
+        # Pattern: <i data-lucide="calendar"></i> 2026-02-07
+        import re
+        text_nodes = soup.find_all(string=re.compile(r'\d{4}-\d{2}-\d{2}'))
+        if text_nodes:
+            date = text_nodes[0].strip()
+            
+        url = f"https://tkmai.top/blog/{filename.replace('.html', '')}"
+        
+        self.blog_posts.append({
+            'title': title,
+            'description': desc,
+            'date': date,
+            'url': url
+        })
 
     def _reconstruct_head(self, soup, filename, section):
         head = soup.find('head')
@@ -256,7 +296,57 @@ class SiteBuilder:
         head.append('\n')
 
         # Group E: Structured Data
-        if original_schema:
+        if section == 'blog' and filename == 'index.html':
+            # Generate Custom Schema for Blog Index
+            schema = {
+                "@context": "https://schema.org",
+                "@graph": [
+                    {
+                        "@type": "BreadcrumbList",
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://tkmai.top/"
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Blog",
+                                "item": "https://tkmai.top/blog/"
+                            }
+                        ]
+                    },
+                    {
+                        "@type": "CollectionPage",
+                        "@id": "https://tkmai.top/blog/",
+                        "url": "https://tkmai.top/blog/",
+                        "name": "TKMai Blog - TikTok Insights",
+                        "description": original_desc,
+                        "mainEntity": {
+                            "@type": "ItemList",
+                            "itemListElement": []
+                        }
+                    }
+                ]
+            }
+            # Add posts
+            sorted_posts = sorted(self.blog_posts, key=lambda x: x['date'], reverse=True)
+            for i, post in enumerate(sorted_posts):
+                schema['@graph'][1]['mainEntity']['itemListElement'].append({
+                    "@type": "ListItem",
+                    "position": i + 1,
+                    "url": post['url'],
+                    "name": post['title']
+                })
+            
+            schema_tag = soup.new_tag('script', type='application/ld+json')
+            schema_tag.string = json.dumps(schema, indent=2, ensure_ascii=False)
+            head.append(schema_tag)
+            head.append('\n')
+            
+        elif original_schema:
             schema_tag = soup.new_tag('script', type='application/ld+json')
             schema_tag.string = original_schema
             head.append(schema_tag)
